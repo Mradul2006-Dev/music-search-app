@@ -1,12 +1,175 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <title>Music Search App</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soundwave — Music Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js" defer></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>Music Search App</h1>
-    <script src="script.js"></script>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">◈</span>
+      <span class="logo-text">Soundwave</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-view="home">
+        <i class="ph ph-house-simple"></i> Home
+      </a>
+      <a href="#" class="nav-item" data-view="search">
+        <i class="ph ph-magnifying-glass"></i> Search
+      </a>
+      <a href="#" class="nav-item" data-view="library">
+        <i class="ph ph-books"></i> My Library
+      </a>
+    </nav>
+
+    <div class="sidebar-section-title">Playlists</div>
+    <ul class="playlist-list" id="playlistList">
+      <li class="playlist-item">Liked Songs <span class="pill">♥ Favorites</span></li>
+      <li class="playlist-item">Chill Vibes</li>
+      <li class="playlist-item">Top Charts</li>
+      <li class="playlist-item">Workout Mix</li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
+        <i class="ph ph-moon" id="themeIcon"></i>
+      </button>
+    </div>
+  </aside>
+
+  <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+    <i class="ph ph-list"></i>
+  </button>
+
+  <main class="main-content">
+
+    <header class="topbar">
+      <div class="search-wrap">
+        <i class="ph ph-magnifying-glass search-icon"></i>
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="Search songs, artists, albums…"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="topbar-controls">
+        <select id="filterSelect" class="control-select">
+          <option value="all">All Artists</option>
+        </select>
+
+        <select id="sortSelect" class="control-select">
+          <option value="default">Sort: Default</option>
+          <option value="az">A → Z</option>
+          <option value="za">Z → A</option>
+          <option value="rank">By Rank</option>
+        </select>
+      </div>
+    </header>
+
+
+    <section class="hero-section" id="heroSection">
+      <div class="hero-text">
+        <p class="hero-eyebrow">Good evening 🎧</p>
+        <h1 class="hero-title">Discover <em>Music</em><br/>You'll Love</h1>
+        <p class="hero-sub">Real tracks from Deezer's global charts — search, filter, sort, and save your favorites.</p>
+      </div>
+      <div class="hero-art">
+        <div class="vinyl-disc" id="vinylDisc">
+          <div class="vinyl-label">◈</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-header">
+      <h2 class="section-title" id="sectionTitle">Trending Now</h2>
+      <span class="song-count" id="songCount"></span>
+    </div>
+
+    <div class="loading-state" id="loadingState">
+      <div class="spinner"></div>
+      <p>Fetching tracks…</p>
+    </div>
+
+    <div class="error-state hidden" id="errorState">
+      <i class="ph ph-wifi-slash error-icon"></i>
+      <h3>Couldn't load tracks</h3>
+      <p id="errorMessage">Check your connection and try again.</p>
+      <button class="btn-retry" id="retryBtn">Retry</button>
+    </div>
+
+    <div class="empty-state hidden" id="emptyState">
+      <i class="ph ph-music-notes-slash"></i>
+      <p>No songs match your search.</p>
+    </div>
+
+    <div class="song-grid" id="songGrid"></div>
+
+    <div class="pagination" id="pagination">
+      <button class="page-btn" id="prevBtn" disabled>
+        <i class="ph ph-caret-left"></i> Prev
+      </button>
+      <span class="page-info" id="pageInfo">Page 1</span>
+      <button class="page-btn" id="nextBtn">
+        Next <i class="ph ph-caret-right"></i>
+      </button>
+    </div>
+  </main>
+
+  <div class="now-playing-bar" id="nowPlayingBar">
+    <div class="np-left">
+      <img src="" alt="" class="np-thumb" id="npThumb" />
+      <div class="np-info">
+        <span class="np-title" id="npTitle">—</span>
+        <span class="np-artist" id="npArtist">Select a track</span>
+      </div>
+      <button class="np-like" id="npLike" title="Like">
+        <i class="ph ph-heart"></i>
+      </button>
+    </div>
+    <div class="np-center">
+      <button class="ctrl-btn" id="npPrev"><i class="ph ph-skip-back"></i></button>
+      <button class="ctrl-btn play-main" id="npPlay">
+        <i class="ph ph-play" id="npPlayIcon"></i>
+      </button>
+      <button class="ctrl-btn" id="npNext"><i class="ph ph-skip-forward"></i></button>
+    </div>
+    <div class="np-right">
+      <i class="ph ph-speaker-high"></i>
+      <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="80" />
+    </div>
+  </div>
+
+  <template id="songCardTemplate">
+    <div class="song-card">
+      <div class="card-image-wrap">
+        <img class="card-img" src="" alt="" loading="lazy" />
+        <div class="card-overlay">
+          <button class="play-btn"><i class="ph ph-play"></i></button>
+        </div>
+        <button class="like-btn" title="Add to favorites">
+          <i class="ph ph-heart"></i>
+        </button>
+      </div>
+      <div class="card-body">
+        <p class="card-rank"></p>
+        <h3 class="card-title"></h3>
+        <p class="card-artist"></p>
+        <p class="card-album"></p>
+      </div>
+    </div>
+  </template>
+
+  <script src="script.js"></script>
 </body>
 </html>
