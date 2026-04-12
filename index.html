@@ -4,10 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Soundwave — Music Explorer</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  
   <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js" defer></script>
+  
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -49,6 +52,7 @@
     <i class="ph ph-list"></i>
   </button>
 
+
   <main class="main-content">
 
     <header class="topbar">
@@ -77,7 +81,6 @@
       </div>
     </header>
 
-
     <section class="hero-section" id="heroSection">
       <div class="hero-text">
         <p class="hero-eyebrow">Good evening 🎧</p>
@@ -91,10 +94,10 @@
       </div>
     </section>
 
-    <div class="section-header">
+    <header class="section-header">
       <h2 class="section-title" id="sectionTitle">Trending Now</h2>
       <span class="song-count" id="songCount"></span>
-    </div>
+    </header>
 
     <div class="loading-state" id="loadingState">
       <div class="spinner"></div>
@@ -112,10 +115,9 @@
       <i class="ph ph-music-notes-slash"></i>
       <p>No songs match your search.</p>
     </div>
+    <section class="song-grid" id="songGrid"></section>
 
-    <div class="song-grid" id="songGrid"></div>
-
-    <div class="pagination" id="pagination">
+    <nav class="pagination" id="pagination" aria-label="Pagination">
       <button class="page-btn" id="prevBtn" disabled>
         <i class="ph ph-caret-left"></i> Prev
       </button>
@@ -123,10 +125,13 @@
       <button class="page-btn" id="nextBtn">
         Next <i class="ph ph-caret-right"></i>
       </button>
-    </div>
+    </nav>
+
   </main>
 
-  <div class="now-playing-bar" id="nowPlayingBar">
+
+  <footer class="now-playing-bar" id="nowPlayingBar">
+    
     <div class="np-left">
       <img src="" alt="" class="np-thumb" id="npThumb" />
       <div class="np-info">
@@ -137,37 +142,48 @@
         <i class="ph ph-heart"></i>
       </button>
     </div>
+
     <div class="np-center">
-      <button class="ctrl-btn" id="npPrev"><i class="ph ph-skip-back"></i></button>
-      <button class="ctrl-btn play-main" id="npPlay">
+      <button class="ctrl-btn" id="npPrev" aria-label="Previous Track">
+        <i class="ph ph-skip-back"></i>
+      </button>
+      <button class="ctrl-btn play-main" id="npPlay" aria-label="Play/Pause">
         <i class="ph ph-play" id="npPlayIcon"></i>
       </button>
-      <button class="ctrl-btn" id="npNext"><i class="ph ph-skip-forward"></i></button>
+      <button class="ctrl-btn" id="npNext" aria-label="Next Track">
+        <i class="ph ph-skip-forward"></i>
+      </button>
     </div>
+
     <div class="np-right">
       <i class="ph ph-speaker-high"></i>
-      <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="80" />
+      <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="80" aria-label="Volume" />
     </div>
-  </div>
+
+  </footer>
+
 
   <template id="songCardTemplate">
-    <div class="song-card">
+    <article class="song-card">
+      
       <div class="card-image-wrap">
         <img class="card-img" src="" alt="" loading="lazy" />
         <div class="card-overlay">
-          <button class="play-btn"><i class="ph ph-play"></i></button>
+          <button class="play-btn" aria-label="Play Song"><i class="ph ph-play"></i></button>
         </div>
         <button class="like-btn" title="Add to favorites">
           <i class="ph ph-heart"></i>
         </button>
       </div>
+
       <div class="card-body">
         <p class="card-rank"></p>
         <h3 class="card-title"></h3>
         <p class="card-artist"></p>
         <p class="card-album"></p>
       </div>
-    </div>
+
+    </article>
   </template>
 
   <script src="script.js"></script>
