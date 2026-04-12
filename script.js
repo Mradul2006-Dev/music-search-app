@@ -1,11 +1,3 @@
-/**
- * ============================================================================
- * 🎵 MUSIC PLAYER APPLICATION
- * ============================================================================
- * A clean, human-readable implementation of a music player fetching 
- * preview tracks from the iTunes API.
- */
-
 // --- 1. CONFIGURATION & STATE ---
 // Centralizing these makes it easy to tweak app behavior later.
 const CONFIG = {
